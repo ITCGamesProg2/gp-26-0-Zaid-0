@@ -12,6 +12,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include "ScreenSize.h"
+#include "AssetManager.h"
 
 /// <summary>
 /// @author RP
@@ -85,6 +86,10 @@ protected:
 	sf::Font m_arialFont;
 	// main window
 	sf::RenderWindow m_window;
+
+	AssetManager m_assetManager;
+	sf::Texture m_BlankTexture{ "resources/images/check.jpg" };
+	sf::Sprite m_sprite{ m_BlankTexture };
 
 #ifdef TEST_FPS
 	sf::Text x_updateFPS{ m_arialFont };	// text used to display updates per second.

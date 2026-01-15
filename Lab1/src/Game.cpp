@@ -22,6 +22,10 @@ void Game::init()
 		std::cerr << "Error loading font file";
 	}
 
+	m_assetManager.loadTexture("tankAtlas", "resources/images/spritesheet.png");
+	sf::Texture const& texture = m_assetManager.getTexture("tankAtlas");
+	m_sprite.setTexture(texture, true); 
+
 #ifdef TEST_FPS
 	x_updateFPS.setFont(m_arialFont);
 	x_updateFPS.setPosition(sf::Vector2f{ 20.0f, 300.0f });
