@@ -31,13 +31,24 @@ void Game::init()
 	// BlueTank coordinates from sprites.txt: x=0, y=0, width=246, height=114
 	sf::IntRect tankRect(sf::Vector2i(0, 0), sf::Vector2i(246, 114));
 	m_sprite.setTextureRect(tankRect);
+
+	// Set origin to center of sprite: ( width/2 , height/2) 
+	m_sprite.setOrigin(sf::Vector2f{ 246.0f / 2.0f, 114.0f / 2.0f }); //= (123, 57)
+
 	m_sprite.setPosition(sf::Vector2f{ 100.0, 100.0 });
+	// With the origin set to center, the sprite is now drawn with its center point at position (100, 100).
+	// before the top-left corner was at (100, 100). Now the center of the sprite is at (100, 100).
+	// Part of the sprite is missing because the center is at (100, 100), so the left and top portions extend
+
 
 	// Set up the turret sprite to show only the blue gun/turret
 	// Gun Blue coordinates from sprites.txt: x=0, y=325, width=191, height=94
 	m_turretSprite.setTexture(texture, true);
 	sf::IntRect turretRect(sf::Vector2i(0, 325), sf::Vector2i(191, 94));
 	m_turretSprite.setTextureRect(turretRect);
+
+	// Set origin to center of turret sprite: (width/2, height/2) = (95.5, 47)
+	m_turretSprite.setOrigin(sf::Vector2f{ 191.0f / 2.0f, 94.0f / 2.0f });
 	// Position turret on top of the tank (centered horizontally, slightly above)
 	m_turretSprite.setPosition(sf::Vector2f{ 100.0 + (246.0f - 191.0f) / 2.0f, 100.0f });
 
