@@ -51,6 +51,13 @@ void Game::init()
 	x_drawFPS.setCharacterSize(24);
 	x_drawFPS.setFillColor(sf::Color::White);
 #endif
+
+	// When releaseTexture is called down, the texture is removed from the AssetManager.
+	// the sprites are still referencing this texture, they crashed
+	// because the texture data is no longer available. The sprites need the texture to remain
+	// in memory as long as they are using it.
+	
+	//m_assetManager.releaseTexture("tankAtlas");
 }
 
 ////////////////////////////////////////////////////////////
