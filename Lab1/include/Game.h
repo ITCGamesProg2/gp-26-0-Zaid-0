@@ -90,6 +90,7 @@ protected:
 	AssetManager m_assetManager;
 	sf::Texture m_BlankTexture{ "resources/images/check.jpg" };
 	sf::Sprite m_sprite{ m_BlankTexture };
+	sf::Sprite m_turretSprite{ m_BlankTexture };
 
 #ifdef TEST_FPS
 	sf::Text x_updateFPS{ m_arialFont };	// text used to display updates per second.

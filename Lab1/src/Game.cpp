@@ -24,7 +24,22 @@ void Game::init()
 
 	m_assetManager.loadTexture("tankAtlas", "resources/images/spritesheet.png");
 	sf::Texture const& texture = m_assetManager.getTexture("tankAtlas");
-	m_sprite.setTexture(texture, true); 
+	m_sprite.setTexture(texture, true);
+
+	// When the sprite is drawn without setTextureRect, the whole spritesheet is displayed
+	// used setTextureRect to select only a specific portion of the texture (the blue tank body now)
+	// BlueTank coordinates from sprites.txt: x=0, y=0, width=246, height=114
+	sf::IntRect tankRect(sf::Vector2i(0, 0), sf::Vector2i(246, 114));
+	m_sprite.setTextureRect(tankRect);
+	m_sprite.setPosition(sf::Vector2f{ 100.0, 100.0 });
+
+	// Set up the turret sprite to show only the blue gun/turret
+	// Gun Blue coordinates from sprites.txt: x=0, y=325, width=191, height=94
+	m_turretSprite.setTexture(texture, true);
+	sf::IntRect turretRect(sf::Vector2i(0, 325), sf::Vector2i(191, 94));
+	m_turretSprite.setTextureRect(turretRect);
+	// Position turret on top of the tank (centered horizontally, slightly above)
+	m_turretSprite.setPosition(sf::Vector2f{ 100.0 + (246.0f - 191.0f) / 2.0f, 100.0f });
 
 #ifdef TEST_FPS
 	x_updateFPS.setFont(m_arialFont);
@@ -130,6 +145,11 @@ void Game::update(double dt)
 void Game::render()
 {
 	m_window.clear(sf::Color(0, 0, 0, 0));
+	
+	// Draw tank body first, then turret on top
+	m_window.draw(m_sprite);
+	m_window.draw(m_turretSprite);
+
 #ifdef TEST_FPS
 	m_window.draw(x_updateFPS);
 	m_window.draw(x_drawFPS);
