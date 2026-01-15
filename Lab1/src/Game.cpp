@@ -35,10 +35,33 @@ void Game::init()
 	// Set origin to center of sprite: ( width/2 , height/2) 
 	m_sprite.setOrigin(sf::Vector2f{ 246.0f / 2.0f, 114.0f / 2.0f }); //= (123, 57)
 
-	m_sprite.setPosition(sf::Vector2f{ 100.0, 100.0 });
+	// Move sprite to center of screen so it's fully visible
+	m_sprite.setPosition(sf::Vector2f{ 400.0, 400.0 });
 	// With the origin set to center, the sprite is now drawn with its center point at position (100, 100).
 	// before the top-left corner was at (100, 100). Now the center of the sprite is at (100, 100).
 	// Part of the sprite is missing because the center is at (100, 100), so the left and top portions extend
+
+
+	// Rotate the sprite by 90 degrees
+	// setRotation() sets the absolute rotation angle
+	// Using SFML 3.0 sf::Angle type with sf::degrees()
+	m_sprite.setRotation(sf::degrees(90.0f));
+
+
+	// The tank rotates clockwise with a positive angle
+	// By default, 0 corresponds to "right" x+. Rotating 90 clockwise from right
+	// means the sprite now points "down" y+.
+
+	// rotate() adds to the current rotation 
+	// If current rotation is 90, rotate(sf::degrees(45)) makes it 135
+	// m_sprite.rotate(sf::degrees(45.0f)); 
+	// This would add 45 to the current 90, making it 135
+
+	// setRotation() sets the absolute rotation
+	// setRotation(sf::degrees(90)) makes rotation to exactly 90, without caring about the previous value
+	// m_sprite.setRotation(sf::degrees(180.0f));
+	// This would set rotation to exactly 180 as not 90 + 180
+
 
 
 	// Set up the turret sprite to show only the blue gun/turret
@@ -50,7 +73,10 @@ void Game::init()
 	// Set origin to center of turret sprite: (width/2, height/2) = (95.5, 47)
 	m_turretSprite.setOrigin(sf::Vector2f{ 191.0f / 2.0f, 94.0f / 2.0f });
 	// Position turret on top of the tank (centered horizontally, slightly above)
-	m_turretSprite.setPosition(sf::Vector2f{ 100.0 + (246.0f - 191.0f) / 2.0f, 100.0f });
+	// Updated position to match the new tank position
+	m_turretSprite.setPosition(sf::Vector2f{ 400.0, 400.0f });
+	// Rotate turret to match tank rotation
+	m_turretSprite.setRotation(sf::degrees(90.0f));
 
 #ifdef TEST_FPS
 	x_updateFPS.setFont(m_arialFont);
