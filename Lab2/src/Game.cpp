@@ -8,7 +8,8 @@ static float const FPS{ 60.0f };
 Game::Game()	
 	: m_window(sf::VideoMode(sf::Vector2u(ScreenSize::s_width, ScreenSize::s_height)), "SFML Playground", sf::Style::Default),
 	  m_sprite(m_tempTexture),
-	  m_turretSprite(m_tempTexture)
+	  m_turretSprite(m_tempTexture),
+	  m_bgSprite(m_tempTexture)
 #ifdef TEST_FPS
 	  , x_updateFPS(m_arialFont),
 	  x_drawFPS(m_arialFont)
@@ -42,7 +43,10 @@ void Game::init()
 	}
 
 	m_assetManager.loadTexture("tankAtlas", "resources/images/spritesheet.png");
+	m_assetManager.loadTexture("background", "resources/images/" + m_level.m_background.m_fileName);
 	sf::Texture const& texture = m_assetManager.getTexture("tankAtlas");
+	sf::Texture const& bgTexture = m_assetManager.getTexture("background");
+	m_bgSprite.setTexture(bgTexture, true);
 	m_sprite.setTexture(texture, true);
 
 	// When the sprite is drawn without setTextureRect, the whole spritesheet is displayed
@@ -208,7 +212,7 @@ void Game::update(double dt)
 void Game::render()
 {
 	m_window.clear(sf::Color(0, 0, 0, 0));
-	
+	m_window.draw(m_bgSprite);
 	// Draw tank body first, then turret on top
 	m_window.draw(m_sprite);
 	m_window.draw(m_turretSprite);
