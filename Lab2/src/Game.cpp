@@ -60,6 +60,10 @@ void Game::init()
 
 	// Move sprite using from level data
 	m_sprite.setPosition(m_level.m_tank.m_position);
+
+	// Set scale from level data
+	m_sprite.setScale(m_level.m_tank.m_scale);
+
 	// With the origin set to center, the sprite is now drawn with its center point at position (100, 100).
 	// before the top-left corner was at (100, 100). Now the center of the sprite is at (100, 100).
 	// Part of the sprite is missing because the center is at (100, 100), so the left and top portions extend

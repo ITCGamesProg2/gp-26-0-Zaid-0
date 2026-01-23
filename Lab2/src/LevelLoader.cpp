@@ -41,6 +41,8 @@ void operator >> (const YAML::Node& t_tankNode, TankData& t_tank)
 {
 	t_tank.m_position.x = t_tankNode["position"]["x"].as<float>();
 	t_tank.m_position.y = t_tankNode["position"]["y"].as<float>();
+	t_tank.m_scale.x = t_tankNode["scale"]["x"].as<float>();
+	t_tank.m_scale.y = t_tankNode["scale"]["y"].as<float>();
 }
 
 /// <summary>

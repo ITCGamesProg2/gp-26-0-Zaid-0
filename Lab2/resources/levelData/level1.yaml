@@ -2,6 +2,7 @@ background:
    file: background.jpg # Sample comment
 tank:
    position: {x: 850, y: 100}
+   scale: {x: 0.5, y: 0.5}
 obstacles: 
    - type: wall
      position: {x: 100, y: 660}

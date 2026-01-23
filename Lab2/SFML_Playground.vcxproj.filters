@@ -45,4 +45,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\levelData\level1.yaml">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>

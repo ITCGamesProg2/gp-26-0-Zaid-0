@@ -33,6 +33,7 @@ struct BackgroundData
 struct TankData
 {
 	sf::Vector2f m_position;
+	sf::Vector2f m_scale;
 };
 
 /// <summary>
