@@ -54,8 +54,8 @@ void Game::init()
 	// Set origin to center of sprite: ( width/2 , height/2) 
 	m_sprite.setOrigin(sf::Vector2f{ 246.0f / 2.0f, 114.0f / 2.0f }); //= (123, 57)
 
-	// Move sprite to center of screen so it's fully visible
-	m_sprite.setPosition(sf::Vector2f{ 400.0, 400.0 });
+	// Move sprite using from level data
+	m_sprite.setPosition(m_level.m_tank.m_position);
 	// With the origin set to center, the sprite is now drawn with its center point at position (100, 100).
 	// before the top-left corner was at (100, 100). Now the center of the sprite is at (100, 100).
 	// Part of the sprite is missing because the center is at (100, 100), so the left and top portions extend
