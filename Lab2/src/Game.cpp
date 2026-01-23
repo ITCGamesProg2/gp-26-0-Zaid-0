@@ -20,6 +20,19 @@ Game::Game()
 ////////////////////////////////////////////////////////////
 void Game::init()
 {
+	int currentLevel = 1;
+	// Will generate an exception if level loading fails
+	try
+	{
+		LevelLoader::load(currentLevel, m_level);
+	}
+	catch (std::exception& e)
+	{
+		std::cout << "Level Loading failure." << std::endl;
+		std::cout << e.what() << std::endl;
+		throw e;
+	}
+
 	// Really only necessary is our target FPS is greater than 60.
 	m_window.setVerticalSyncEnabled(true);
 
