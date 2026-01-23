@@ -17,6 +17,7 @@
 #include <iostream>
 #include "Game.h"
 
+#pragma comment(lib,"libyaml-cppmdd")
 
 /// <summary>
 /// @brief starting point for all C++ programs.

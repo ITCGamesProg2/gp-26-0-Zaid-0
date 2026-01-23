@@ -6,7 +6,13 @@ static float const FPS{ 60.0f };
 
 ////////////////////////////////////////////////////////////
 Game::Game()	
-	: m_window(sf::VideoMode({ ScreenSize::s_width, ScreenSize::s_height }, 32), "SFML Playground", sf::Style::Default)
+	: m_window(sf::VideoMode(sf::Vector2u(ScreenSize::s_width, ScreenSize::s_height)), "SFML Playground", sf::Style::Default),
+	  m_sprite(m_tempTexture),
+	  m_turretSprite(m_tempTexture)
+#ifdef TEST_FPS
+	  , x_updateFPS(m_arialFont),
+	  x_drawFPS(m_arialFont)
+#endif
 {
 	init();
 }

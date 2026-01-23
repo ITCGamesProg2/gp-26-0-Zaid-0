@@ -13,6 +13,7 @@
 #include <string>
 #include "ScreenSize.h"
 #include "AssetManager.h"
+#include "LevelLoader.h"
 
 /// <summary>
 /// @author RP
@@ -88,13 +89,14 @@ protected:
 	sf::RenderWindow m_window;
 
 	AssetManager m_assetManager;
-	sf::Texture m_BlankTexture{ "resources/images/check.jpg" };
-	sf::Sprite m_sprite{ m_BlankTexture };
-	sf::Sprite m_turretSprite{ m_BlankTexture };
+	// Temporary texture for sprite initialization (SFML 3.0 requires texture for Sprite constructor)
+	sf::Texture m_tempTexture;
+	sf::Sprite m_sprite;
+	sf::Sprite m_turretSprite;
 
 #ifdef TEST_FPS
-	sf::Text x_updateFPS{ m_arialFont };	// text used to display updates per second.
-	sf::Text x_drawFPS{ m_arialFont };		// text used to display draw calls per second.
+	sf::Text x_updateFPS;	// text used to display updates per second.
+	sf::Text x_drawFPS;		// text used to display draw calls per second.
 	sf::Time x_secondTime {sf::Time::Zero};	// counter used to establish when a second has passed.
 	int x_updateFrameCount{ 0 };			// updates per second counter.
 	int x_drawFrameCount{ 0 };				// draws per second counter.
