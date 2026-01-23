@@ -94,6 +94,8 @@ protected:
 	sf::Sprite m_sprite;
 	sf::Sprite m_turretSprite;
 
+	LevelData m_level;
+
 #ifdef TEST_FPS
 	sf::Text x_updateFPS;	// text used to display updates per second.
 	sf::Text x_drawFPS;		// text used to display draw calls per second.
