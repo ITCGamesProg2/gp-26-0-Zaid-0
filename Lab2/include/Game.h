@@ -11,6 +11,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <vector>
 #include "ScreenSize.h"
 #include "AssetManager.h"
 #include "LevelLoader.h"
@@ -83,6 +84,13 @@ protected:
 	/// <param name="t_event">key pressed event</param>
 	void processKeyPressed(const std::optional<sf::Event>& t_event);
 
+	///  Creates the wall sprites and loads them into a vector.
+	///  sf::Sprite is considered a light weight class, so 
+	///  storing copies (instead of pointers to sf::Sprite) in std::vector 
+	///  is acceptable.
+	/// </summary>
+	void generateWalls();
+
 	// Font used for all text
 	sf::Font m_arialFont;
 	// main window
@@ -96,7 +104,7 @@ protected:
 
 	LevelData m_level;
 	sf::Sprite m_bgSprite;
-
+	std::vector<sf::Sprite> m_wallSprites;
 
 #ifdef TEST_FPS
 	sf::Text x_updateFPS;	// text used to display updates per second.

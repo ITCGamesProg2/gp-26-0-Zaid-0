@@ -122,6 +122,25 @@ void Game::init()
 	// in memory as long as they are using it.
 	
 	//m_assetManager.releaseTexture("tankAtlas");
+	generateWalls();
+}
+void Game::generateWalls()
+{
+	// Wall coordinates from sprites.txt: x=192, y=325, width=32, height=22
+	sf::IntRect wallRect{ sf::Vector2i{192, 325}, sf::Vector2i{32, 22} };
+	sf::Texture const& texture = m_assetManager.getTexture("tankAtlas");
+
+	for (auto const& obstacle : m_level.m_obstacles)
+	{
+		sf::Sprite sprite(texture);
+		sprite.setTextureRect(wallRect);
+		sprite.setOrigin(
+			sf::Vector2f{ 32.0f / 2.0f, 22.0f / 2.0f }
+		);
+		sprite.setPosition(obstacle.m_position);
+		sprite.setRotation(obstacle.m_rotation);
+		m_wallSprites.push_back(sprite);
+	}
 }
 
 ////////////////////////////////////////////////////////////
