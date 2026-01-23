@@ -240,6 +240,12 @@ void Game::render()
 	m_window.draw(m_sprite);
 	m_window.draw(m_turretSprite);
 
+	// Draw wall 
+	for (auto const& wall : m_wallSprites)
+	{
+		m_window.draw(wall);
+	}
+
 #ifdef TEST_FPS
 	m_window.draw(x_updateFPS);
 	m_window.draw(x_drawFPS);
