@@ -15,6 +15,7 @@
 #include "ScreenSize.h"
 #include "AssetManager.h"
 #include "LevelLoader.h"
+#include "Tank.h"
 
 /// <summary>
 /// @author RP
@@ -99,12 +100,13 @@ protected:
 	AssetManager& m_assetManager;
 	// Temporary texture for sprite initialization (SFML 3.0 requires texture for Sprite constructor)
 	sf::Texture m_tempTexture;
-	sf::Sprite m_sprite;
-	sf::Sprite m_turretSprite;
 
 	LevelData m_level;
 	sf::Sprite m_bgSprite;
 	std::vector<sf::Sprite> m_wallSprites;
+
+	// An instance representing the player controlled tank. 
+	Tank m_tank;
 
 #ifdef TEST_FPS
 	sf::Text x_updateFPS;	// text used to display updates per second.

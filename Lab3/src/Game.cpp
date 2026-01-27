@@ -9,8 +9,7 @@ Game::Game(AssetManager& t_assetManager)
 	: m_window(sf::VideoMode(sf::Vector2u(ScreenSize::s_width, ScreenSize::s_height)),
 		"SFML Playground", sf::Style::Default),
 	m_assetManager(t_assetManager),
-	m_sprite(m_tempTexture),
-	m_turretSprite(m_tempTexture),
+	m_tank(t_assetManager),
 	m_bgSprite(m_tempTexture)
 #ifdef TEST_FPS
 	, x_updateFPS(m_arialFont),
