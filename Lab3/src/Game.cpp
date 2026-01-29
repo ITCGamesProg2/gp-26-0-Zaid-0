@@ -38,6 +38,10 @@ void Game::init()
 	// Really only necessary is our target FPS is greater than 60.
 	m_window.setVerticalSyncEnabled(true);
 
+	//Using YAML
+	m_tank.setPosition(m_level.m_tank.m_position);
+	m_tank.setScale(m_level.m_tank.m_scale);
+
 	if (!m_arialFont.openFromFile("BebasNeue.otf"))
 	{
 		std::cerr << "Error loading font file";
@@ -214,7 +218,7 @@ void Game::processKeyPressed(const std::optional<sf::Event>& t_event)
 ////////////////////////////////////////////////////////////
 void Game::update(double dt)
 {
-
+	m_tank.update(dt);
 }
 
 ////////////////////////////////////////////////////////////
@@ -225,6 +229,9 @@ void Game::render()
 	// Draw tank body first, then turret on top
 	//m_window.draw(m_sprite);
 	//m_window.draw(m_turretSprite);
+
+	// Draw tank
+	m_tank.render(m_window);
 
 	// Draw wall 
 	for (auto const& wall : m_wallSprites)

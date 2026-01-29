@@ -13,3 +13,6 @@ obstacles:
    - type: wall
      position: {x: 167, y: 670}
      rotation: 20
+   - type: wall
+     position: {x: 190, y: 670}
+     rotation: 20

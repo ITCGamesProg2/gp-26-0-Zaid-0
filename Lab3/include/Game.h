@@ -17,8 +17,6 @@
 #include "LevelLoader.h"
 #include "Tank.h"
 
-Tank m_tank;
-
 /// <summary>
 /// @author RP
 /// @date January 2026
