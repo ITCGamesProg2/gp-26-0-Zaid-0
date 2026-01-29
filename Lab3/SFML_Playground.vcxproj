@@ -99,12 +99,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\SFML-3.0.0\include; .\include; .</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\SFML-3.0.2\include;C:\SFML-3.0.0\include; .\include; .</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\SFML-3.0.0\lib; .\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\SFML-3.0.2\lib;C:\SFML-3.0.0\lib; .\lib</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -130,14 +130,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SFML_SDK)\include; .\include; .</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\SFML-3.0.2\include;$(SFML_SDK)\include; .\include; .</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SFML_SDK)\lib; .\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\SFML-3.0.2\lib;$(SFML_SDK)\lib; .\lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

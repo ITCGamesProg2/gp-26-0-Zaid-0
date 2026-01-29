@@ -11,7 +11,30 @@ Tank::Tank(AssetManager & t_assetManager)
 
 void Tank::update(double dt)
 {	
-	
+	m_speed = std::clamp(m_speed, MAX_REVERSE_SPEED, MAX_FORWARD_SPEED);
+	// calculate new position based on rotation and speed
+	double rotationRadians = m_rotation.asRadians(); //convert to radius to use in sin-cos
+
+	sf::Vector2f currentPos = m_tankBase.getPosition();	// current position
+
+	// new position: current + cos(rotation) * speed * (dt / 1000)
+	// dt is in milliseconds, so divide by 1000 to get seconds
+	double dtSeconds = dt / 1000.0;
+	double newX = currentPos.x + std::cos(rotationRadians) * m_speed * dtSeconds;
+	double newY = currentPos.y + std::sin(rotationRadians) * m_speed * dtSeconds;
+
+	// tank base to new position
+	m_tankBase.setPosition(sf::Vector2f{ static_cast<float>(newX), static_cast<float>(newY) });
+
+	//update rotation angle of tank base
+	m_tankBase.setRotation(m_rotation);
+
+	// (turret follows tank position)
+	m_turret.setPosition(m_tankBase.getPosition());
+	m_turret.setRotation(m_rotation);
+
+	// apply friction to gradually slow down the tank
+	m_speed *= 0.99;
 }
 
 void Tank::render(sf::RenderWindow & window) 
@@ -40,8 +63,37 @@ void Tank::setScale(sf::Vector2f t_scale)
 
 void Tank::setScale(double t_scale)
 {
-	m_tankBase.setScale(sf::Vector2f{ t_scale, t_scale });
-	m_turret.setScale(sf::Vector2f{ t_scale, t_scale });
+	float scale = static_cast<float>(t_scale);
+	m_tankBase.setScale(sf::Vector2f{ scale, scale }); 
+	m_turret.setScale(sf::Vector2f{ scale, scale }); 
+}
+
+void Tank::increaseSpeed()
+{
+	m_speed += 1;
+}
+
+void Tank::decreaseSpeed()
+{
+	m_speed -= 1;
+}
+
+void Tank::increaseRotation()
+{
+	m_rotation += sf::degrees(1.0f);
+	if (m_rotation.asDegrees() == 360.0f)
+	{
+		m_rotation = sf::degrees(0.0);
+	}
+}
+
+void Tank::decreaseRotation()
+{
+	m_rotation -= sf::degrees(1.0f);
+	if (m_rotation.asDegrees() == 0.0f)
+	{
+		m_rotation = sf::degrees(359.0f);
+	}
 }
 
 void Tank::initSprites()
@@ -56,7 +108,7 @@ void Tank::initSprites()
 	//set texture rectangle for turret
 	sf::IntRect turretRect{ sf::Vector2i{0, 325}, sf::Vector2i{191, 94} };
 	m_turret.setTextureRect(turretRect);
-	m_turret.setOrigin(sf::Vector2f{ 95.5f, 94.0f });
+	m_turret.setOrigin(sf::Vector2f{ 95.5f, 50.0f });
 
 }
 

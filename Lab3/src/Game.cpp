@@ -207,7 +207,16 @@ void Game::processKeyPressed(const std::optional<sf::Event>& t_event)
 				m_window.close();
 				break;
 			case sf::Keyboard::Key::Up:
-				// Up key was pressed...
+				m_tank.increaseSpeed();
+				break;
+			case sf::Keyboard::Key::Down:
+				m_tank.decreaseSpeed();
+				break;
+			case sf::Keyboard::Key::Left:
+				m_tank.decreaseRotation();
+				break;
+			case sf::Keyboard::Key::Right:
+				m_tank.increaseRotation();
 				break;
 			default:
 				break;

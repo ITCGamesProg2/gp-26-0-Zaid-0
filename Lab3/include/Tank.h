@@ -47,8 +47,10 @@ public:
 	/// <param name="t_scale">A single value representing the combined x,y scaling factor</param>
 	/// </summary>
 	void setScale(double t_scale);
-
-
+	void increaseSpeed();
+	void decreaseSpeed();
+	void increaseRotation();
+	void decreaseRotation();
 	
 private:	
 	void initSprites();
@@ -63,5 +65,6 @@ private:
 	// The current rotation as applied to tank base.
 	sf::Angle m_rotation{ sf::degrees(0.0) };
 
-
+	static double constexpr MAX_FORWARD_SPEED{ 100.0 };
+	static double constexpr MAX_REVERSE_SPEED{ -100.0 };
 };
