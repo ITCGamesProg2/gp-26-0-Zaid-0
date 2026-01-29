@@ -45,24 +45,17 @@ void Game::init()
 
 	m_assetManager.loadTexture("background", "resources/images/" + m_level.m_background.m_fileName);
 	sf::Texture const& bgTexture = m_assetManager.getTexture("background");
-	sf::Texture const& texture = m_assetManager.getTexture("tankAtlas");
 	m_bgSprite.setTexture(bgTexture, true);
-	m_sprite.setTexture(texture, true);
 
 	// When the sprite is drawn without setTextureRect, the whole spritesheet is displayed
 	// used setTextureRect to select only a specific portion of the texture (the blue tank body now)
 	// BlueTank coordinates from sprites.txt: x=0, y=0, width=246, height=114
-	sf::IntRect tankRect(sf::Vector2i(0, 0), sf::Vector2i(246, 114));
-	m_sprite.setTextureRect(tankRect);
 
 	// Set origin to center of sprite: ( width/2 , height/2) 
-	m_sprite.setOrigin(sf::Vector2f{ 246.0f / 2.0f, 114.0f / 2.0f }); //= (123, 57)
 
 	// Move sprite using from level data
-	m_sprite.setPosition(m_level.m_tank.m_position);
 
 	// Set scale from level data
-	m_sprite.setScale(m_level.m_tank.m_scale);
 
 	// With the origin set to center, the sprite is now drawn with its center point at position (100, 100).
 	// before the top-left corner was at (100, 100). Now the center of the sprite is at (100, 100).
@@ -72,7 +65,6 @@ void Game::init()
 	// Rotate the sprite by 90 degrees
 	// setRotation() sets the absolute rotation angle
 	// Using SFML 3.0 sf::Angle type with sf::degrees()
-	m_sprite.setRotation(sf::degrees(90.0f));
 
 
 	// The tank rotates clockwise with a positive angle
@@ -93,17 +85,11 @@ void Game::init()
 
 	// Set up the turret sprite to show only the blue gun/turret
 	// Gun Blue coordinates from sprites.txt: x=0, y=325, width=191, height=94
-	m_turretSprite.setTexture(texture, true);
-	sf::IntRect turretRect(sf::Vector2i(0, 325), sf::Vector2i(191, 94));
-	m_turretSprite.setTextureRect(turretRect);
 
 	// Set origin to center of turret sprite: (width/2, height/2) = (95.5, 47)
-	m_turretSprite.setOrigin(sf::Vector2f{ 191.0f / 2.0f, 94.0f / 2.0f });
 	// Position turret on top of the tank (centered horizontally, slightly above)
 	// Updated position to match the new tank position
-	m_turretSprite.setPosition(sf::Vector2f{ 400.0, 400.0f });
 	// Rotate turret to match tank rotation
-	m_turretSprite.setRotation(sf::degrees(90.0f));
 
 #ifdef TEST_FPS
 	x_updateFPS.setFont(m_arialFont);
@@ -237,8 +223,8 @@ void Game::render()
 	m_window.clear(sf::Color(0, 0, 0, 0));
 	m_window.draw(m_bgSprite);
 	// Draw tank body first, then turret on top
-	m_window.draw(m_sprite);
-	m_window.draw(m_turretSprite);
+	//m_window.draw(m_sprite);
+	//m_window.draw(m_turretSprite);
 
 	// Draw wall 
 	for (auto const& wall : m_wallSprites)
