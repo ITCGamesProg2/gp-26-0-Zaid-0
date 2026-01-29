@@ -11,7 +11,13 @@ Tank::Tank(AssetManager & t_assetManager)
 
 void Tank::update(double dt)
 {	
-	m_speed = std::clamp(m_speed, MAX_REVERSE_SPEED, MAX_FORWARD_SPEED);
+	m_speed = std::clamp(m_speed, MAX_REVERSE_SPEED, MAX_FORWARD_SPEED); //clamp used to limit the speed
+
+
+	// 2.3.1::  now yes, the tank moves in response to keyboard input because,
+	// - processKeyPressed() calls speed and rotation functions 
+	// - update() function is called every frame in the game loop
+
 	// calculate new position based on rotation and speed
 	double rotationRadians = m_rotation.asRadians(); //convert to radius to use in sin-cos
 
@@ -35,6 +41,9 @@ void Tank::update(double dt)
 
 	// apply friction to gradually slow down the tank
 	m_speed *= 0.99;
+	// notice multiplying by 0.99 reduces the value by 1% each frame, causing stopping at the end and approaching 0
+
+
 }
 
 void Tank::render(sf::RenderWindow & window) 
