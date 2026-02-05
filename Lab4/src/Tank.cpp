@@ -11,6 +11,8 @@ Tank::Tank(AssetManager & t_assetManager)
 
 void Tank::update(double dt)
 {	
+	//process keyboard input first to handle key presses
+	handleKeyInput();
 	m_speed = std::clamp(m_speed, MAX_REVERSE_SPEED, MAX_FORWARD_SPEED); //clamp used to limit the speed
 
 
@@ -119,5 +121,30 @@ void Tank::initSprites()
 	m_turret.setTextureRect(turretRect);
 	m_turret.setOrigin(sf::Vector2f{ 95.5f, 50.0f });
 
+}
+
+
+void Tank::handleKeyInput()
+{
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
+	{
+		increaseSpeed();
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
+	{
+		decreaseSpeed();
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
+	{
+		increaseRotation();
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
+	{
+		decreaseRotation();
+	}
 }
 
