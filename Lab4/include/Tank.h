@@ -52,6 +52,12 @@ public:
 	void increaseRotation();
 	void decreaseRotation();
 	
+	void handleKeyInput();
+
+	void increaseTurretRotation();
+	void decreaseTurretRotation();
+
+
 private:	
 	void initSprites();
 	
@@ -64,6 +70,9 @@ private:
 
 	// The current rotation as applied to tank base.
 	sf::Angle m_rotation{ sf::degrees(0.0) };
+
+	sf::Angle m_turretRotation{ sf::degrees(0.0) };
+
 
 	static double constexpr MAX_FORWARD_SPEED{ 100.0 };
 	static double constexpr MAX_REVERSE_SPEED{ -100.0 };

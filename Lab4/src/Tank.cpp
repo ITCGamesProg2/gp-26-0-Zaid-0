@@ -39,7 +39,7 @@ void Tank::update(double dt)
 
 	// (turret follows tank position)
 	m_turret.setPosition(m_tankBase.getPosition());
-	m_turret.setRotation(m_rotation);
+	m_turret.setRotation(m_rotation + m_turretRotation);
 
 	// apply friction to gradually slow down the tank
 	m_speed *= 0.99;
@@ -145,6 +145,37 @@ void Tank::handleKeyInput()
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
 	{
 		decreaseRotation();
+	}
+	// Turret rotation controls (Z and X keys)
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z))
+	{
+		increaseTurretRotation();
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::X))
+	{
+		decreaseTurretRotation();
+	}
+}
+
+////////////////////////////////////////////////////////////
+void Tank::increaseTurretRotation()
+{
+	m_turretRotation += sf::degrees(1.0);
+	if (m_turretRotation.asDegrees() >= 360.0)
+	{
+		m_turretRotation = sf::degrees(m_turretRotation.asDegrees() - 360.0);
+	}
+}
+
+////////////////////////////////////////////////////////////
+void Tank::decreaseTurretRotation()
+{
+	m_turretRotation -= sf::degrees(1.0);
+	double degrees = m_turretRotation.asDegrees();
+	if (degrees < 0.0)
+	{
+		m_turretRotation = sf::degrees(degrees + 360.0);
 	}
 }
 
