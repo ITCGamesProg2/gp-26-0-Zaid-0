@@ -120,12 +120,12 @@ void Tank::initSprites()
 	m_tankBase.setTextureRect(tankBaseRect);
 	// set origin of tank base to center (mounting point for turret)
 	// origin at center
-	m_tankBase.setOrigin(sf::Vector2f{ 123.0f, 57.0f });
+	m_tankBase.setOrigin(sf::Vector2f{ 90.0f, 57.0f });
 
 	//set texture rectangle for turret
 	sf::IntRect turretRect{ sf::Vector2i{0, 325}, sf::Vector2i{191, 94} };
 	m_turret.setTextureRect(turretRect);
-	m_turret.setOrigin(sf::Vector2f{ 95.5f, 50.0f });
+	m_turret.setOrigin(sf::Vector2f{ 50.0f, 50.0f });
 
 }
 
