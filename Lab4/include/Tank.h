@@ -57,6 +57,8 @@ public:
 	void increaseTurretRotation();
 	void decreaseTurretRotation();
 
+	void centreTurret();
+	void setCentringTurret(bool t_centring); //True to start centring, false to stop
 
 private:	
 	void initSprites();
@@ -73,6 +75,8 @@ private:
 
 	sf::Angle m_turretRotation{ sf::degrees(0.0) };
 
+	//to use for the centering function
+	bool m_centringTurret{ false };
 
 	static double constexpr MAX_FORWARD_SPEED{ 100.0 };
 	static double constexpr MAX_REVERSE_SPEED{ -100.0 };

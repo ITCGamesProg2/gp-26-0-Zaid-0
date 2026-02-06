@@ -1,4 +1,4 @@
-#include "Tank.h"
+﻿#include "Tank.h"
 #include <iostream>
 
 Tank::Tank(AssetManager & t_assetManager)
@@ -13,6 +13,12 @@ void Tank::update(double dt)
 {	
 	//process keyboard input first to handle key presses
 	handleKeyInput();
+
+	if (m_centringTurret)
+	{
+		centreTurret();
+	}
+
 	m_speed = std::clamp(m_speed, MAX_REVERSE_SPEED, MAX_FORWARD_SPEED); //clamp used to limit the speed
 
 
@@ -150,11 +156,25 @@ void Tank::handleKeyInput()
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z))
 	{
 		increaseTurretRotation();
+		//stop centring if user manually rotates turret
+		if (m_centringTurret)
+		{
+			m_centringTurret = false;
+		}
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::X))
 	{
 		decreaseTurretRotation();
+		//same as Z
+		if (m_centringTurret)
+		{
+			m_centringTurret = false;
+		}
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::C))
+	{
+		setCentringTurret(true);
 	}
 }
 
@@ -176,6 +196,51 @@ void Tank::decreaseTurretRotation()
 	if (degrees < 0.0)
 	{
 		m_turretRotation = sf::degrees(degrees + 360.0);
+	}
+}
+
+///////////////////////////////////////////////////////////
+void Tank::setCentringTurret(bool t_centring)
+{
+	m_centringTurret = t_centring;
+}
+
+
+void Tank::centreTurret()
+{
+	// A = turret direction
+	//total turret rotation now = tank base rotation + turret relative rotation
+	sf::Angle totalTurretRotation = m_rotation + m_turretRotation; //as degrees 
+	double turretRadians = totalTurretRotation.asRadians();
+	double turretX = std::cos(turretRadians);
+	double turretY = std::sin(turretRadians);
+
+	//B = tank base direction
+	double tankRadians = m_rotation.asRadians();
+	double tankX =std::cos(tankRadians); 
+	double tankY = std::sin(tankRadians);
+
+	// get cross = (A.x * B.y) - (A.y * B.x)
+	double cross = (turretX * tankY) - (turretY * tankX);
+
+	// epsilon value to prevent jittering when almost centered
+	const double epsilon = 0.01;
+
+	//if turret is already centered
+	if (std::abs(cross) < epsilon)
+	{
+		//ؤlamp to exactly 0 and stop centring
+		cross = 0.0;
+		m_turretRotation = sf::degrees(0.0);
+		m_centringTurret = false;
+	}
+	else if (cross > epsilon)
+	{
+		increaseTurretRotation(); //centre it
+	}
+	else // cross less than -epsilon : diffrent side
+	{
+		decreaseTurretRotation();
 	}
 }
 
