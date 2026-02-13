@@ -14,8 +14,8 @@ public:
 	/// @brief Constructor function to initialise sprite members.
 	/// <param name="t_assetManager">The asset manager initialised with the texture atlas</param>
 	/// </summary>
-	Tank(AssetManager & t_assetManager);
-	
+	Tank(AssetManager& t_assetManager, std::vector<sf::Sprite>& t_wallSprites);
+
 	/// <summary>
 	/// @brief Handle all the movement and general update logic for the tank.
 	/// <param name="dt">The time between frames in milliseconds</param>
@@ -57,15 +57,24 @@ public:
 	void increaseTurretRotation();
 	void decreaseTurretRotation();
 
+	bool checkWallCollision();
+	void deflect(double dt);
+
 	void centreTurret();
 	void setCentringTurret(bool t_centring); //True to start centring, false to stop
 
 private:	
+	enum class TankState { NORMAL, COLLIDING };
+	TankState m_state{ TankState::NORMAL };
+
 	void initSprites();
 	
 	AssetManager & m_assetManager;
 	sf::Sprite m_tankBase;
 	sf::Sprite m_turret;
+
+	std::vector<sf::Sprite>& m_wallSprites;
+	sf::Vector2f m_contactNormal;
 
 	// The tank speed.
 	double m_speed{ 0.0 };
