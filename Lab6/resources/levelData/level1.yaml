@@ -3,6 +3,11 @@ background:
 tank:
    position: {x: 850, y: 100}
    scale: {x: 0.5, y: 0.5}
+ai_tank:
+   position: {x: 400, y: 700}
+   scale: {x: 0.5, y: 0.5}
+   max_projectiles: 10
+   reload_time: 1000
 obstacles: 
    - type: wall
      position: {x: 100, y: 660}

@@ -114,7 +114,7 @@ void Game::init()
 	
 	//m_assetManager.releaseTexture("tankAtlas");
 	generateWalls();
-	m_aiTank.init(sf::Vector2f{ 400.0f, 700.0f }, sf::Vector2f{ 0.5f, 0.5f });
+	m_aiTank.init(m_level.m_aiTank.m_position, m_level.m_aiTank.m_scale);
 }
 void Game::generateWalls()
 {
