@@ -137,7 +137,16 @@ const sf::CircleShape AITank::findMostThreateningObstacle()
 
 	for (sf::CircleShape & circle : m_obstacles)
 	{
-		// complete this loop......
+		bool collision = MathUtility::lineIntersectsCircle(m_ahead, m_halfAhead, circle);
+		if (collision)
+		{
+			if (mostThreatening.getRadius() == 0.0f ||
+				MathUtility::distance(m_tankBase.getPosition(), circle.getPosition()) <
+				MathUtility::distance(m_tankBase.getPosition(), mostThreatening.getPosition()))
+			{
+				mostThreatening = circle;
+			}
+		}
 	}
 	return mostThreatening;
 }
