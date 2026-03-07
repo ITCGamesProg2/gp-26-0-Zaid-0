@@ -45,6 +45,18 @@ void operator >> (const YAML::Node& t_tankNode, TankData& t_tank)
 	t_tank.m_scale.y = t_tankNode["scale"]["y"].as<float>();
 }
 
+/// @brief Extracts the initial screen position for the AI tank.
+void operator >> (const YAML::Node& t_tankNode, AITankData& t_aiTank)
+{
+	t_aiTank.m_position.x = t_tankNode["position"]["x"].as<float>();
+	t_aiTank.m_position.y = t_tankNode["position"]["y"].as<float>();
+	t_aiTank.m_scale.x = t_tankNode["scale"]["x"].as<float>();
+	t_aiTank.m_scale.y = t_tankNode["scale"]["y"].as<float>();
+	t_aiTank.m_maxProjectiles = t_tankNode["max_projectiles"].as<int>();
+	t_aiTank.m_reloadTime = t_tankNode["reload_time"].as<int>();
+}
+
+
 /// <summary>
 /// @brief Top level function that extracts various game data from the YAML data stucture.
 /// 
@@ -59,6 +71,8 @@ void operator >> (const YAML::Node& t_levelNode, LevelData& t_level)
 	t_levelNode["background"] >> t_level.m_background;
 
 	t_levelNode["tank"] >> t_level.m_tank;
+
+	t_levelNode["ai_tank"] >> t_level.m_aiTank;
 
 	const YAML::Node& obstaclesNode = t_levelNode["obstacles"].as<YAML::Node>();
 	for (unsigned i = 0; i < obstaclesNode.size(); ++i)

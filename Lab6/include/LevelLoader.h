@@ -36,6 +36,15 @@ struct TankData
 	sf::Vector2f m_scale;
 };
 
+struct AITankData
+{
+	sf::Vector2f m_position;
+	sf::Vector2f m_scale;
+	int m_maxProjectiles;
+	int m_reloadTime;
+};
+
+
 /// <summary>
 /// @brief A struct representing all the Level Data.
 /// 
@@ -45,6 +54,7 @@ struct LevelData
 {
 	BackgroundData m_background;
 	TankData m_tank;
+	AITankData m_aiTank;
 	std::vector<ObstacleData> m_obstacles;
 };
 
