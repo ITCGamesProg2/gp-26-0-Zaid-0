@@ -104,8 +104,15 @@ sf::Vector2f AITank::collisionAvoidance()
 	m_ahead = m_tankBase.getPosition() + headingVector;
 	m_halfAhead = m_tankBase.getPosition() + (headingVector * 0.5f);
 
-	m_mostThreatening = findMostThreateningObstacle();
-	
+	//compute left and right lookahead vectors 45deg at half the ahead length
+	sf::Vector2f halfHeading = headingVector * 0.5f;
+	sf::Vector2f left = halfHeading.rotatedBy(sf::degrees(-45));
+	sf::Vector2f right = halfHeading.rotatedBy(sf::degrees(45));
+	m_aheadLeft = m_tankBase.getPosition() + left;
+	m_aheadRight = m_tankBase.getPosition() + right;
+
+	sf::Vector2f collisionVector = findMostThreateningObstacle();
+
 	sf::Vector2f avoidance(0, 0);
 
 	// If there is a threatening obstacle, calculate an avoidance vector which is a unit vector pointing away from the obstacle multiplied by 
@@ -120,7 +127,7 @@ sf::Vector2f AITank::collisionAvoidance()
 
 		// Scale factor: 1.0 when very close, 0.0 when at MAX_SEE_AHEAD
 		float multiplier = 1.0f + (MAX_SEE_AHEAD - dist) / MAX_SEE_AHEAD;
-		avoidance = m_ahead - m_mostThreatening.getPosition();
+		avoidance = collisionVector - m_mostThreatening.getPosition();
 		avoidance = avoidance.normalized() * MAX_AVOID_FORCE * multiplier;
 	}
 	else
@@ -131,13 +138,52 @@ sf::Vector2f AITank::collisionAvoidance()
 	return avoidance;
 }
 
-const sf::CircleShape AITank::findMostThreateningObstacle()
+sf::Vector2f AITank::findMostThreateningObstacle() 
 {
+	sf::Vector2f collisionVector(0.0f, 0.0f);
 	sf::CircleShape mostThreatening{ 0.0f };
 
 	for (sf::CircleShape & circle : m_obstacles)
 	{
 		bool collision = MathUtility::lineIntersectsCircle(m_ahead, m_halfAhead, circle);
+
+		// if not, also test the left and right lookahead vectors using their midpoints as halfahead points
+		if (!collision)
+		{
+			sf::Vector2f halfLeft = m_tankBase.getPosition() + (m_aheadLeft - m_tankBase.getPosition()) * 0.5f;
+			collision = MathUtility::lineIntersectsCircle(m_aheadLeft, halfLeft, circle);
+			if (collision)
+			{
+				// Collision came from the left look ahead
+				if (mostThreatening.getRadius() == 0.0f ||
+					MathUtility::distance(m_tankBase.getPosition(), circle.getPosition()) <
+					MathUtility::distance(m_tankBase.getPosition(), mostThreatening.getPosition()))
+				{
+					mostThreatening = circle;
+					collisionVector = m_aheadLeft;
+				}
+				continue;
+			}
+		}
+
+		if (!collision)
+		{
+			sf::Vector2f halfRight = m_tankBase.getPosition() + (m_aheadRight - m_tankBase.getPosition()) * 0.5f;
+			collision = MathUtility::lineIntersectsCircle(m_aheadRight, halfRight, circle);
+			if (collision)
+			{
+				// Collision came from the right look ahead
+				if (mostThreatening.getRadius() == 0.0f ||
+					MathUtility::distance(m_tankBase.getPosition(), circle.getPosition()) <
+					MathUtility::distance(m_tankBase.getPosition(), mostThreatening.getPosition()))
+				{
+					mostThreatening = circle;
+					collisionVector = m_aheadRight;
+				}
+				continue;
+			}
+		}
+
 		if (collision)
 		{
 			if (mostThreatening.getRadius() == 0.0f ||
@@ -145,10 +191,12 @@ const sf::CircleShape AITank::findMostThreateningObstacle()
 				MathUtility::distance(m_tankBase.getPosition(), mostThreatening.getPosition()))
 			{
 				mostThreatening = circle;
+				collisionVector = m_ahead;
 			}
 		}
 	}
-	return mostThreatening;
+	m_mostThreatening = mostThreatening;
+	return collisionVector;
 }
 
 ////////////////////////////////////////////////////////////

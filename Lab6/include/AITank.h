@@ -61,7 +61,7 @@ private:
 
 	sf::Vector2f collisionAvoidance();
 
-	const sf::CircleShape findMostThreateningObstacle();
+	sf::Vector2f findMostThreateningObstacle();
 
 	// A reference to the sprite sheet texture.
 	sf::Texture const & m_texture;
