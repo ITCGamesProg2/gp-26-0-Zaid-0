@@ -144,7 +144,7 @@ void Tank::setPosition(sf::Vector2f t_position)
 	m_turret.setPosition(t_position);
 }
 
-sf::Vector2f Tank::getPosition()
+sf::Vector2f Tank::getPosition() const 
 {
 	return m_tankBase.getPosition();
 }

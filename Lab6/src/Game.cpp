@@ -10,6 +10,7 @@ Game::Game(AssetManager& t_assetManager)
 		"SFML Playground", sf::Style::Default),
 	m_assetManager(t_assetManager),
 	m_tank(t_assetManager, m_wallSprites),
+	m_aiTank(m_assetManager.getTexture("tankAtlas"), m_wallSprites),
 	m_bgSprite(m_tempTexture)
 #ifdef TEST_FPS
 	, x_updateFPS(m_arialFont),
@@ -113,6 +114,7 @@ void Game::init()
 	
 	//m_assetManager.releaseTexture("tankAtlas");
 	generateWalls();
+	m_aiTank.init(sf::Vector2f{ 400.0f, 700.0f }, sf::Vector2f{ 0.5f, 0.5f });
 }
 void Game::generateWalls()
 {
@@ -216,6 +218,7 @@ void Game::processKeyPressed(const std::optional<sf::Event>& t_event)
 void Game::update(double dt)
 {
 	m_tank.update(dt);
+	m_aiTank.update(m_tank, dt);
 }
 
 ////////////////////////////////////////////////////////////
@@ -229,7 +232,7 @@ void Game::render()
 
 	// Draw tank
 	m_tank.render(m_window);
-
+	m_aiTank.render(m_window);
 	// Draw wall 
 	for (auto const& wall : m_wallSprites)
 	{

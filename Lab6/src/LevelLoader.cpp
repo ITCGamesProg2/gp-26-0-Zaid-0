@@ -48,6 +48,15 @@ void operator >> (const YAML::Node& t_tankNode, TankData& t_tank)
 /// @brief Extracts the initial screen position for the AI tank.
 void operator >> (const YAML::Node& t_tankNode, AITankData& t_aiTank)
 {
+	if (!t_tankNode
+		|| !t_tankNode["position"]
+		|| !t_tankNode["scale"]
+		|| !t_tankNode["max_projectiles"]
+		|| !t_tankNode["reload_time"])
+	{
+		return;
+	}
+
 	t_aiTank.m_position.x = t_tankNode["position"]["x"].as<float>();
 	t_aiTank.m_position.y = t_tankNode["position"]["y"].as<float>();
 	t_aiTank.m_scale.x = t_tankNode["scale"]["x"].as<float>();

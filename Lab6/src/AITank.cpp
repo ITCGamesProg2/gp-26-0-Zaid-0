@@ -91,8 +91,8 @@ void AITank::init(sf::Vector2f t_position, sf::Vector2f t_scale)
 ////////////////////////////////////////////////////////////
 sf::Vector2f AITank::seek(sf::Vector2f t_playerPosition) const
 {
-	// This return statement is simply a placeholder and must be changed...
-	return sf::Vector2f(0, 1);	
+	// Vector pointing from AI tank towards player tank
+	return t_playerPosition - m_tankBase.getPosition();
 		
 }
 
@@ -144,20 +144,22 @@ const sf::CircleShape AITank::findMostThreateningObstacle()
 
 ////////////////////////////////////////////////////////////
 void AITank::initSprites()
-{	
-	sf::IntRect brownTankRect({ 0, 117 }, { 243, 114 });
+{
+	// Brown tank base from sprites.txt: BrownTank,0,115,244,114
+	sf::IntRect brownTankRect({ 0, 115 }, { 244, 114 });
 	m_tankBase.setTexture(m_texture);
 	m_tankBase.setTextureRect(brownTankRect);
 
-	m_tankBase.setOrigin(sf::Vector2f{ 88, brownTankRect.size.y / 2.0f });
-	m_tankBase.setPosition(sf::Vector2f{ 200, 20 });
+	// Set origin roughly at the turret mounting point (similar إلى اللاعب)
+	m_tankBase.setOrigin(sf::Vector2f{ 90.0f, 57.0f });
 
 	// Initialise the turret
 	m_turret.setTexture(m_texture);
-	sf::IntRect turretRect({ 0, 23 }, { 212, 93 });
+	// Brown gun from sprites.txt: Gun_01_Brown,0,230,212,94
+	sf::IntRect turretRect({ 0, 230 }, { 212, 94 });
 	m_turret.setTextureRect(turretRect);
 
-	m_turret.setOrigin(sf::Vector2f{ 45, turretRect.size.y / 2.0f });
+	m_turret.setOrigin(sf::Vector2f{ 50.0f, 47.0f });
 }
 
 ////////////////////////////////////////////////////////////

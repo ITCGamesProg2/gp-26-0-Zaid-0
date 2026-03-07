@@ -34,8 +34,8 @@ public:
 	/// </summary>
 	void setPosition(sf::Vector2f t_position);
 	
-	sf::Vector2f getPosition();
-	
+	sf::Vector2f getPosition() const;
+
 	/// <summary>
 	/// @brief Scaling factor to apply to the tank base and turret
 	/// <param name="t_scale">The x,y scaling value</param>

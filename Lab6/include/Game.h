@@ -16,6 +16,7 @@
 #include "AssetManager.h"
 #include "LevelLoader.h"
 #include "Tank.h"
+#include "AITank.h"
 
 /// <summary>
 /// @author RP
@@ -108,6 +109,7 @@ protected:
 	// An instance representing the player controlled tank. 
 	Tank m_tank;
 
+	AITank m_aiTank;
 #ifdef TEST_FPS
 	sf::Text x_updateFPS;	// text used to display updates per second.
 	sf::Text x_drawFPS;		// text used to display draw calls per second.
