@@ -208,6 +208,9 @@ void Game::processKeyPressed(const std::optional<sf::Event>& t_event)
 			case sf::Keyboard::Key::Escape:
 				m_window.close();
 				break;
+			case sf::Keyboard::Key::D:
+				m_aiTank.setDebugMode(!m_aiTank.getDebugMode());
+				break;
 			default:
 				break;
 		}

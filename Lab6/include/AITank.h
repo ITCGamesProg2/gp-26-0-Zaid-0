@@ -124,5 +124,15 @@ private:
 
 	sf::CircleShape m_mostThreatening{ 0.0f };
 
+	sf::RectangleShape m_aheadVector;
+	sf::RectangleShape m_aheadLeftVector;
+	sf::RectangleShape m_aheadRightVector;
+
+	// When true, draw ahead vectors and obstacle circles
+	bool m_debugMode{ false };
+
+public:
+	void setDebugMode(bool t_enabled) { m_debugMode = t_enabled; }
+	bool getDebugMode() const { return m_debugMode; }
 };
 

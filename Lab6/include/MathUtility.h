@@ -11,4 +11,7 @@ namespace MathUtility
 	// Truncate a vector to a maximum magnitude. 
 	// This is used to limit the steering and velocity vectors to their maximum values.
 	sf::Vector2f truncated(sf::Vector2f t_vector, float t_maxForce);
+
+	// linear interpolation: returns a + (b - a) * t. t=0 gives a, t=1 gives b
+	float lerp(float a, float b, float t);
 }

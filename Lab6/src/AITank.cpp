@@ -69,6 +69,34 @@ void AITank::render(sf::RenderWindow & window)
 	// TODO: Don't draw if off-screen...
 	window.draw(m_tankBase);
 	window.draw(m_turret);	
+
+	if (m_debugMode)
+	{
+		// Draw obstacle circles whitee
+		for (sf::CircleShape const& circle : m_obstacles)
+		{
+			sf::CircleShape drawCircle = circle;
+			drawCircle.setFillColor(sf::Color(255, 255, 255, 80));
+			drawCircle.setOutlineColor(sf::Color(255, 255, 255, 150));
+			drawCircle.setOutlineThickness(1.0f);
+			window.draw(drawCircle);
+		}
+
+		// Draw the most threatening obstacle in red
+		if (m_mostThreatening.getRadius() != 0.0f)
+		{
+			sf::CircleShape threatCircle = m_mostThreatening;
+			threatCircle.setFillColor(sf::Color(255, 0, 0, 120));
+			threatCircle.setOutlineColor(sf::Color::Red);
+			threatCircle.setOutlineThickness(2.0f);
+			window.draw(threatCircle);
+		}
+
+		// Draw the three ahead vectors.
+		window.draw(m_aheadVector);
+		window.draw(m_aheadLeftVector);
+		window.draw(m_aheadRightVector);
+	}
 }
 
 ////////////////////////////////////////////////////////////
@@ -111,6 +139,22 @@ sf::Vector2f AITank::collisionAvoidance()
 	m_aheadLeft = m_tankBase.getPosition() + left;
 	m_aheadRight = m_tankBase.getPosition() + right;
 
+	// Configure debug ahead vectors  when m_debugMode is true
+	m_aheadVector.setPosition(m_tankBase.getPosition());
+	m_aheadVector.setSize(sf::Vector2f{ headingVector.length(), 1.0f });
+	m_aheadVector.setFillColor(sf::Color::Red);
+	m_aheadVector.setRotation(m_rotation);
+
+	m_aheadLeftVector.setPosition(m_tankBase.getPosition());
+	m_aheadLeftVector.setSize(sf::Vector2f{ halfHeading.length(), 1.0f });
+	m_aheadLeftVector.setFillColor(sf::Color::Red);
+	m_aheadLeftVector.setRotation(m_rotation + sf::degrees(-45));
+
+	m_aheadRightVector.setPosition(m_tankBase.getPosition());
+	m_aheadRightVector.setSize(sf::Vector2f{ halfHeading.length(), 1.0f });
+	m_aheadRightVector.setFillColor(sf::Color::Red);
+	m_aheadRightVector.setRotation(m_rotation + sf::degrees(45));
+
 	sf::Vector2f collisionVector = findMostThreateningObstacle();
 
 	sf::Vector2f avoidance(0, 0);
@@ -129,6 +173,10 @@ sf::Vector2f AITank::collisionAvoidance()
 		float multiplier = 1.0f + (MAX_SEE_AHEAD - dist) / MAX_SEE_AHEAD;
 		avoidance = collisionVector - m_mostThreatening.getPosition();
 		avoidance = avoidance.normalized() * MAX_AVOID_FORCE * multiplier;
+
+		// smooth the avoidance vector to reduce oscillation
+		avoidance.x = MathUtility::lerp(m_steering.x, avoidance.x, 0.9f);
+		avoidance.y = MathUtility::lerp(m_steering.y, avoidance.y, 0.9f);
 	}
 	else
 	{		
