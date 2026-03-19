@@ -1,27 +1,24 @@
 #include "ProjectilePool.h"
 
 ////////////////////////////////////////////////////////////
-void ProjectilePool::create(sf::Texture const & t_texture, double t_x, double t_y, sf::Angle t_rotation)
+void ProjectilePool::create(sf::Texture const& t_texture, double t_x, double t_y, sf::Angle t_rotation)
 {
-	// Find the next free projectile if possible; otherwise reuse in a round-robin fashion.
+	// prefer an available projectile
 	int selectedIndex = m_nextAvailable;
+	bool foundFree = false;
 
-	if (!m_poolFull)
+	for (int tries = 0; tries < s_POOL_SIZE; ++tries)
 	{
-		bool foundFree = false;
-		for (int tries = 0; tries < s_POOL_SIZE; ++tries)
+		const int idx = (m_nextAvailable + tries) % s_POOL_SIZE;
+		if (!m_projectiles.at(idx).inUse())
 		{
-			const int idx = (m_nextAvailable + tries) % s_POOL_SIZE;
-			if (!m_projectiles.at(idx).inUse())
-			{
-				selectedIndex = idx;
-				foundFree = true;
-				break;
-			}
+			selectedIndex = idx;
+			foundFree = true;
+			break;
 		}
-		m_poolFull = !foundFree;
 	}
-	
+	m_poolFull = !foundFree;
+
 	m_projectiles.at(selectedIndex).init(t_texture, t_x, t_y, t_rotation);
 	m_nextAvailable = (selectedIndex + 1) % s_POOL_SIZE;
 }

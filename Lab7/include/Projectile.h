@@ -67,6 +67,6 @@ private:
 	sf::Sprite m_projectile{ m_blankTexture };
 
 	// The bounding rectangle for this projectile.
-	sf::IntRect m_projectileRect{ {298, 154}, {24, 10} };	
+	sf::IntRect m_projectileRect{ {192, 348}, {20, 20} };
 
 };
