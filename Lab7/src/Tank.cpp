@@ -51,6 +51,11 @@ void Tank::deflect(double dt)
 
 void Tank::update(double dt)
 {
+	if (m_shootTimer > 0)
+	{
+		m_shootTimer -= dt;
+	}
+
 	// =========================================================
 	// Collision state checking
 	// =========================================================
@@ -131,12 +136,14 @@ void Tank::update(double dt)
 		break;
 	}
 	}
+	m_pool.update(dt, m_wallSprites);
 }
 
 void Tank::render(sf::RenderWindow & window) 
 {
 	window.draw(m_tankBase);
 	window.draw(m_turret);
+	m_pool.render(window);
 }
 
 void Tank::setPosition(sf::Vector2f t_position)
@@ -310,6 +317,7 @@ void Tank::requestFire()
 			tipOfTurret.y,
 			m_turret.getRotation()
 		);
+		m_shootTimer = s_TIME_BETWEEN_SHOTS;
 	}
 }
 
