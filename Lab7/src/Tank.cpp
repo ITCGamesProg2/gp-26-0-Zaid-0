@@ -78,29 +78,6 @@ void Tank::update(double dt)
 		// process keyboard input first to handle key presses
 		handleKeyInput();
 
-		if (m_fireRequested && m_shootTimer <= 0)
-		{
-			const sf::Vector2f turretPos = m_turret.getPosition();
-			const double rotationRadians = m_turret.getRotation().asRadians();
-			const sf::Vector2f dir{
-				static_cast<float>(std::cos(rotationRadians)),
-				static_cast<float>(std::sin(rotationRadians))
-			};
-
-			const float barrelLength = m_turret.getLocalBounds().size.x - m_turret.getOrigin().x;
-			const sf::Vector2f tipOfTurret = turretPos + dir * barrelLength;
-
-			m_pool.create(
-				m_assetManager.getTexture("tankAtlas"),
-				tipOfTurret.x,
-				tipOfTurret.y,
-				m_turret.getRotation()
-			);
-			m_shootTimer = s_TIME_BETWEEN_SHOTS;
-		}
-		m_fireRequested = false;
-
-
 		m_speed = std::clamp(m_speed, MAX_REVERSE_SPEED, MAX_FORWARD_SPEED);
 		// clamp used to limit the speed
 
@@ -159,6 +136,28 @@ void Tank::update(double dt)
 		break;
 	}
 	}
+	if (m_fireRequested && m_shootTimer <= 0)
+	{
+		const sf::Vector2f turretPos = m_turret.getPosition();
+		const double rotationRadians = m_turret.getRotation().asRadians();
+		const sf::Vector2f dir{
+			static_cast<float>(std::cos(rotationRadians)),
+			static_cast<float>(std::sin(rotationRadians))
+		};
+
+		const float barrelLength = m_turret.getLocalBounds().size.x - m_turret.getOrigin().x;
+		const sf::Vector2f tipOfTurret = turretPos + dir * barrelLength;
+
+		m_pool.create(
+			m_assetManager.getTexture("tankAtlas"),
+			tipOfTurret.x,
+			tipOfTurret.y,
+			m_turret.getRotation()
+		);
+		m_shootTimer = s_TIME_BETWEEN_SHOTS;
+	}
+	m_fireRequested = false;
+
 	m_pool.update(dt, m_wallSprites);
 }
 
