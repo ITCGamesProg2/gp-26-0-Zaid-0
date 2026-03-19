@@ -1,4 +1,5 @@
 ﻿#include "Tank.h"
+#include <cmath>
 #include <iostream>
 #include "CollisionDetector.h"
 
@@ -211,6 +212,10 @@ void Tank::initSprites()
 void Tank::handleKeyInput()
 {
 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
+	{
+		requestFire();
+	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
 	{
 		increaseSpeed();
@@ -283,6 +288,30 @@ void Tank::setCentringTurret(bool t_centring)
 	m_centringTurret = t_centring;
 }
 
+void Tank::requestFire()
+{
+	m_fireRequested = true;
+
+	if (m_shootTimer <= 0)
+	{
+		sf::Vector2f tipOfTurret(m_turret.getPosition().x, m_turret.getPosition().y);
+
+		double rotationRadians = m_turret.getRotation().asRadians();
+
+		tipOfTurret.x += std::cos(rotationRadians) *
+			(m_turret.getLocalBounds().position.y + m_turret.getLocalBounds().size.y);
+
+		tipOfTurret.y += std::sin(rotationRadians) *
+			(m_turret.getLocalBounds().position.y + m_turret.getLocalBounds().size.y);
+
+		m_pool.create(
+			m_assetManager.getTexture("tankAtlas"),
+			tipOfTurret.x,
+			tipOfTurret.y,
+			m_turret.getRotation()
+		);
+	}
+}
 
 void Tank::centreTurret()
 {
