@@ -59,7 +59,7 @@ private:
 	static constexpr double s_MAX_SPEED { 1000.0 };
 
 	// Movement speed.
-	double m_speed { s_MAX_SPEED };
+	double m_speed{ 0.0 };
 
 	sf::Texture m_blankTexture{ "resources/images/check.jpg" };
 

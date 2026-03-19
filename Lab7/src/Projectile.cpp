@@ -42,14 +42,14 @@ bool Projectile::update(double t_dt, std::vector<sf::Sprite> & t_wallSprites)
 			}
 		}		
 	}
-	return m_speed == s_MAX_SPEED;
+	return inUse();
 }
 
 ////////////////////////////////////////////////////////////
 bool Projectile::inUse() const 
 { 
 	// Projectile is not in use if not moving.
-	return m_speed == s_MAX_SPEED; 
+	return m_speed > 0.0;
 }
 
 ////////////////////////////////////////////////////////////
