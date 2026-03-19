@@ -17,6 +17,7 @@
 #include "LevelLoader.h"
 #include "Tank.h"
 #include "AITank.h"
+#include "GameState.h"
 
 /// <summary>
 /// @author RP
@@ -110,6 +111,8 @@ protected:
 	Tank m_tank;
 
 	AITank m_aiTank;
+
+	GameState m_gameState{ GameState::GAME_RUNNING };
 #ifdef TEST_FPS
 	sf::Text x_updateFPS;	// text used to display updates per second.
 	sf::Text x_drawFPS;		// text used to display draw calls per second.
