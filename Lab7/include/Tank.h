@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "AssetManager.h"
+#include "ProjectilePool.h"
 
 /// <summary>
 /// @brief A simple tank controller.
@@ -60,10 +61,17 @@ public:
 	bool checkWallCollision();
 	void deflect(double dt);
 
+	void requestFire();
+
 	void centreTurret();
 	void setCentringTurret(bool t_centring); //True to start centring, false to stop
 
 private:	
+	ProjectilePool m_pool;
+	bool m_fireRequested{ false };
+	double m_shootTimer{ 0 };
+	static int const s_TIME_BETWEEN_SHOTS{ 800 };
+
 	enum class TankState { NORMAL, COLLIDING };
 	TankState m_state{ TankState::NORMAL };
 
