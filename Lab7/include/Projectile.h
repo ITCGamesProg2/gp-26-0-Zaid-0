@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <vector>
 #include "CollisionDetector.h"
+#include "ScreenSize.h"
 
 /// <summary>
 /// @brief A basic projectile implementation.

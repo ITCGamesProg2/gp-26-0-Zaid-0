@@ -28,6 +28,8 @@
     <ClInclude Include="include\OrientedBoundingBox.h" />
     <ClInclude Include="include\ResourceManager.h" />
     <ClInclude Include="include\ScreenSize.h" />
+    <ClInclude Include="include\Projectile.h" />
+    <ClInclude Include="include\ProjectilePool.h" />
     <ClInclude Include="include\Tank.h" />
   </ItemGroup>
   <ItemGroup>
@@ -39,6 +41,8 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MathUtility.cpp" />
     <ClCompile Include="src\OrientedBoundingBox.cpp" />
+    <ClCompile Include="src\Projectile.cpp" />
+    <ClCompile Include="src\ProjectilePool.cpp" />
     <ClCompile Include="src\Tank.cpp" />
   </ItemGroup>
   <ItemGroup>

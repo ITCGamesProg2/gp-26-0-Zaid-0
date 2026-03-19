@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <array>
+#include <vector>
 #include "Projectile.h"
 
 class ProjectilePool
