@@ -26,35 +26,31 @@ void ProjectilePool::create(sf::Texture const & t_texture, double t_x, double t_
 	m_nextAvailable = (selectedIndex + 1) % s_POOL_SIZE;
 }
 
-////////////////////////////////////////////////////////////t_
-void ProjectilePool::update(double t_dt, std::vector<sf::Sprite> & t_wallSprites)
-{	
-	// The number of active projectiles.
+////////////////////////////////////////////////////////////
+void ProjectilePool::update(double t_dt, std::vector<sf::Sprite>& t_wallSprites)
+{
 	int activeCount = 0;
-	// Assume the pool is not full initially.
-	m_poolFull = false;
-	for (int i = 0; i < s_POOL_SIZE; i++)
+	int firstAvailable = -1;
+
+	for (int i = 0; i < s_POOL_SIZE; ++i)
 	{
-		// If m_projectiles.at(i).update() returns true, then this projectile is onscreen
-		// Note how the condition is negated (i.e. checking if projectile is not in use)
-		if( !m_projectiles.at(i).update(t_dt, t_wallSprites))
+		const bool stillActive = m_projectiles.at(i).update(t_dt, t_wallSprites);
+		if (stillActive)
 		{
-			// If this projectile has expired, make it the next available.
-			m_nextAvailable = i;
+			++activeCount;
 		}
-		else
+		else if (firstAvailable < 0)
 		{
-			// So we know how many projectiles are active.
-			activeCount++;
+			firstAvailable = i;
 		}
 	}
-	// If no projectiles available, set a flag.
-	if (s_POOL_SIZE == activeCount)
-	{		
-		m_poolFull = true;
+
+	m_poolFull = (activeCount == s_POOL_SIZE);
+	if (!m_poolFull && firstAvailable >= 0)
+	{
+		m_nextAvailable = firstAvailable;
 	}
 }
-
 ////////////////////////////////////////////////////////////
 void ProjectilePool::render(sf::RenderWindow & t_window)
 {
