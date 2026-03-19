@@ -54,6 +54,10 @@ void Tank::update(double dt)
 	if (m_shootTimer > 0)
 	{
 		m_shootTimer -= dt;
+		if (m_shootTimer < 0)
+		{
+			m_shootTimer = 0;
+		}
 	}
 
 	// =========================================================
