@@ -183,6 +183,16 @@ sf::Vector2f Tank::getPosition() const
 	return m_tankBase.getPosition();
 }
 
+sf::Sprite const& Tank::getTurret() const
+{
+	return m_turret;
+}
+
+sf::Sprite const& Tank::getBase() const
+{
+	return m_tankBase;
+}
+
 
 void Tank::setScale(sf::Vector2f t_scale)
 {

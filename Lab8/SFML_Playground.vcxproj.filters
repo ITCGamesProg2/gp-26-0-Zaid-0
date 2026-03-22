@@ -45,12 +45,18 @@
     <ClInclude Include="include\MathUtility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-	  <ClInclude Include="include\Projectile.h">
-		  <Filter>Header Files</Filter>
-	  </ClInclude>
-	  <ClInclude Include="include\ProjectilePool.h">
-		  <Filter>Header Files</Filter>
-	  </ClInclude>
+    <ClInclude Include="include\Projectile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ProjectilePool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\HUD.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game.cpp">
@@ -84,6 +90,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ProjectilePool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\HUD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

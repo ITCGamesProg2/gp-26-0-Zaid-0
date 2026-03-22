@@ -37,6 +37,9 @@ public:
 	/// <param name="window">The SFML Render window</param>
 	void render(sf::RenderWindow & window);
 
+
+	bool collidesWithPlayer(Tank const& playerTank) const;
+
 	/// <summary>
 	/// @brief Initialises the obstacle container and sets the tank base/turret sprites to the specified position and scale.
 	/// <param name="t_position">An x,y position</param>

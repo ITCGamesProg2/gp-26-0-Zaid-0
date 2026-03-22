@@ -1,4 +1,5 @@
 #include "AITank.h"
+#include "CollisionDetector.h"
 
 ////////////////////////////////////////////////////////////
 AITank::AITank(sf::Texture const & texture, std::vector<sf::Sprite> & wallSprites)
@@ -97,6 +98,17 @@ void AITank::render(sf::RenderWindow & window)
 		window.draw(m_aheadLeftVector);
 		window.draw(m_aheadRightVector);
 	}
+}
+
+bool AITank::collidesWithPlayer(Tank const& playerTank) const
+{
+	if (CollisionDetector::collision(m_turret, playerTank.getTurret()) ||
+		CollisionDetector::collision(m_tankBase, playerTank.getBase()))
+	{
+		return true;
+	}
+
+	return false;
 }
 
 ////////////////////////////////////////////////////////////

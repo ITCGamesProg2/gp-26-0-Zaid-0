@@ -42,6 +42,8 @@ public:
 	/// <param name="t_scale">The x,y scaling value</param>
 	/// </summary>
 	void setScale(sf::Vector2f t_scale);
+	sf::Sprite const& getTurret() const;
+	sf::Sprite const& getBase() const;
 
 	/// <summary>
 	/// @brief (overload) Scaling factor to apply to the tank base and turret
