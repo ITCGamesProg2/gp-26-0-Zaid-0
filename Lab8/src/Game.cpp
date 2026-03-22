@@ -130,6 +130,14 @@ void Game::init()
 	generateWalls();
 	m_aiTank.init(m_level.m_aiTank.m_position, m_level.m_aiTank.m_scale);
 }
+
+void Game::restartRound()
+{
+	m_gameState = GameState::GAME_RUNNING;
+	m_tank.resetRound(m_level.m_tank.m_position, m_level.m_tank.m_scale);
+	m_aiTank.resetRound(m_level.m_aiTank.m_position, m_level.m_aiTank.m_scale);
+}
+
 void Game::generateWalls()
 {
 	// Wall coordinates from sprites.txt: x=192, y=325, width=32, height=22
@@ -240,6 +248,7 @@ void Game::update(double dt)
 		&& m_aiTank.collidesWithPlayer(m_tank))
 	{
 		m_gameState = GameState::GAME_LOSE;
+		m_loseRestartTimerMs = 0.0;
 	}
 
 	switch (m_gameState)
@@ -249,7 +258,15 @@ void Game::update(double dt)
 		m_aiTank.update(m_tank, dt);
 		break;
 	case GameState::GAME_WIN:
+		break;
 	case GameState::GAME_LOSE:
+		m_loseRestartTimerMs += dt;
+		if (m_loseRestartTimerMs >= s_loseRestartDelayMs)
+		{
+			m_loseRestartTimerMs = 0.0;
+			restartRound();
+		}
+		break;
 	default:
 		break;
 	}

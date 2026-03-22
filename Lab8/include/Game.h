@@ -95,6 +95,8 @@ protected:
 	/// </summary>
 	void generateWalls();
 
+	void restartRound();
+
 	//used for the HUD and debug FPS text when enabled
 	sf::Font m_font;
 
@@ -120,6 +122,11 @@ protected:
 	AITank m_aiTank;
 
 	GameState m_gameState{ GameState::GAME_RUNNING };
+
+	// Accumulates dt while in GAME_LOSE before auto-restart.
+	double m_loseRestartTimerMs{ 0.0 };
+	static double constexpr s_loseRestartDelayMs{ 3000.0 };
+
 #ifdef TEST_FPS
 	sf::Text x_updateFPS;	// text used to display updates per second.
 	sf::Text x_drawFPS;		// text used to display draw calls per second.

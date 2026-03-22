@@ -68,6 +68,8 @@ public:
 	void centreTurret();
 	void setCentringTurret(bool t_centring); //True to start centring, false to stop
 
+	void resetRound(sf::Vector2f t_position, sf::Vector2f t_scale);
+
 private:	
 	ProjectilePool m_pool;
 	bool m_fireRequested{ false };

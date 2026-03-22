@@ -40,6 +40,7 @@ public:
 	/// <param name="window">The SFML render window</param>	
 	void render(sf::RenderWindow & t_window);
 
+	void reset();
 
 private:
 	static const int s_POOL_SIZE = 100;

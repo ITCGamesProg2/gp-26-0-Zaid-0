@@ -51,6 +51,8 @@ public:
 	/// <returns>True if this projectile is currently in use (i.e. speed is non zero).</returns>
 	bool inUse() const;
 
+	void deactivate();
+
 private:
 	
 	bool isOnScreen(sf::Vector2f t_position) const;

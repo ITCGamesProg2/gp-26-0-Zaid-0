@@ -112,12 +112,26 @@ bool AITank::collidesWithPlayer(Tank const& playerTank) const
 }
 
 ////////////////////////////////////////////////////////////
+void AITank::resetRound(sf::Vector2f t_position, sf::Vector2f t_scale)
+{
+	m_velocity = sf::Vector2f{ 0.0f, 0.0f };
+	m_steering = sf::Vector2f{ 0.0f, 0.0f };
+	m_rotation = sf::degrees(0.0f);
+	m_aiBehaviour = AiBehaviour::SEEK_PLAYER;
+	m_mostThreatening = sf::CircleShape{ 0.0f };
+
+	m_tankBase.setPosition(t_position);
+	m_tankBase.setScale(sf::Vector2f{ t_scale.x, t_scale.y });
+	m_turret.setPosition(t_position);
+	m_turret.setScale(sf::Vector2f{ t_scale.x, t_scale.y });
+	m_tankBase.setRotation(m_rotation);
+	m_turret.setRotation(m_rotation);
+}
+
+////////////////////////////////////////////////////////////
 void AITank::init(sf::Vector2f t_position, sf::Vector2f t_scale)
 {
-	m_tankBase.setPosition(t_position);
-	m_tankBase.setScale(sf::Vector2f{t_scale.x, t_scale.y});
-	m_turret.setPosition(t_position);
-	m_turret.setScale(sf::Vector2f{t_scale.x, t_scale.y});
+	resetRound(t_position, t_scale);
 
 	for (sf::Sprite const wallSprite : m_wallSprites)
 	{

@@ -337,6 +337,27 @@ void Tank::requestFire()
 
 }
 
+//////////////////////////////////////////////////////
+void Tank::resetRound(sf::Vector2f t_position, sf::Vector2f t_scale)
+{
+	m_pool.reset();
+	m_fireRequested = false;
+	m_shootTimer = 0;
+	m_state = TankState::NORMAL;
+	m_speed = 0.0;
+	m_rotation = sf::degrees(0.0f);
+	m_turretRotation = sf::degrees(0.0f);
+	m_centringTurret = false;
+	m_contactNormal = sf::Vector2f{ 0.0f, 0.0f };
+
+	setPosition(t_position);
+	setScale(t_scale);
+	m_tankBase.setRotation(m_rotation);
+	m_turret.setPosition(m_tankBase.getPosition());
+	m_turret.setRotation(m_rotation + m_turretRotation);
+}
+
+
 void Tank::centreTurret()
 {
 	// A = turret direction

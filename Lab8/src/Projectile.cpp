@@ -52,6 +52,12 @@ bool Projectile::inUse() const
 	return m_speed > 0.0;
 }
 
+////////////////////////////////////
+void Projectile::deactivate()
+{
+	m_speed = 0.0;
+}
+
 ////////////////////////////////////////////////////////////
 bool Projectile::isOnScreen(sf::Vector2f t_position) const
 {	

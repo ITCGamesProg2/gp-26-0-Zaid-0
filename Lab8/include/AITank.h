@@ -47,6 +47,8 @@ public:
 	/// </summary>
 	void init(sf::Vector2f t_position, sf::Vector2f t_scale);
 
+	void resetRound(sf::Vector2f t_position, sf::Vector2f t_scale);
+
 	enum class AiType
 	{
 		AI_ID_NONE,

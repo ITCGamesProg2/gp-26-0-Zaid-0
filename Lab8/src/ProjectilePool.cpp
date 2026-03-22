@@ -60,3 +60,13 @@ void ProjectilePool::render(sf::RenderWindow & t_window)
 		}
 	}
 }
+///////////////////////////////////////////
+void ProjectilePool::reset()
+{
+	for (Projectile& p : m_projectiles)
+	{
+		p.deactivate();
+	}
+	m_nextAvailable = 0;
+	m_poolFull = false;
+}
