@@ -1,5 +1,6 @@
 #include "Game.h"
 #include <iostream>
+#include <stdexcept>
 
 // Our target FPS
 static float const FPS{ 60.0f };
@@ -44,10 +45,22 @@ void Game::init()
 	m_tank.setPosition(m_level.m_tank.m_position);
 	m_tank.setScale(m_level.m_tank.m_scale);
 
-	if (!m_font.openFromFile("BebasNeue.otf"))
+	try
 	{
-		std::cerr << "Error loading font file";
+		m_assetManager.loadFont("akashi", "resources/fonts/akashi.ttf");
+		m_hudFont = m_assetManager.getFont("akashi");
 	}
+	catch (std::exception const& e)
+	{
+		std::cerr << "akashi font missing or invalid (" << e.what()
+			<< "); using BebasNeue.otf if present.\n";
+		if (!m_font.openFromFile("BebasNeue.otf"))
+		{
+			std::cerr << "Error loading fallback font file\n";
+		}
+		m_hudFont = m_font;
+	}
+	m_hud.getGameStateText().setFont(m_hudFont);
 
 	m_assetManager.loadTexture("background", "resources/images/" + m_level.m_background.m_fileName);
 	sf::Texture const& bgTexture = m_assetManager.getTexture("background");
@@ -98,11 +111,11 @@ void Game::init()
 	// Rotate turret to match tank rotation
 
 #ifdef TEST_FPS
-	x_updateFPS.setFont(m_font);
+	x_updateFPS.setFont(m_hudFont);
 	x_updateFPS.setPosition(sf::Vector2f{ 20.0f, 300.0f });
 	x_updateFPS.setCharacterSize(24);
 	x_updateFPS.setFillColor(sf::Color::White);
-	x_drawFPS.setFont(m_font);
+	x_drawFPS.setFont(m_hudFont);
 	x_drawFPS.setPosition(sf::Vector2f{ 20.0f, 350.0f });
 	x_drawFPS.setCharacterSize(24);
 	x_drawFPS.setFillColor(sf::Color::White);
@@ -221,9 +234,27 @@ void Game::processKeyPressed(const std::optional<sf::Event>& t_event)
 ////////////////////////////////////////////////////////////
 void Game::update(double dt)
 {
-	m_tank.update(dt);
-	m_aiTank.update(m_tank, dt);
+	m_hud.update(m_gameState);
+
+	if (m_gameState == GameState::GAME_RUNNING
+		&& m_aiTank.collidesWithPlayer(m_tank))
+	{
+		m_gameState = GameState::GAME_LOSE;
+	}
+
+	switch (m_gameState)
+	{
+	case GameState::GAME_RUNNING:
+		m_tank.update(dt);
+		m_aiTank.update(m_tank, dt);
+		break;
+	case GameState::GAME_WIN:
+	case GameState::GAME_LOSE:
+	default:
+		break;
+	}
 }
+
 
 ////////////////////////////////////////////////////////////
 void Game::render()
@@ -242,6 +273,8 @@ void Game::render()
 	{
 		m_window.draw(wall);
 	}
+
+	m_hud.render(m_window);
 
 #ifdef TEST_FPS
 	m_window.draw(x_updateFPS);

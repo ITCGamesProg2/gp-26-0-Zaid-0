@@ -98,6 +98,9 @@ protected:
 	//used for the HUD and debug FPS text when enabled
 	sf::Font m_font;
 
+	// hud font copy 
+	sf::Font m_hudFont;
+
 	// game HUD instance
 	HUD m_hud;
 	// main window
