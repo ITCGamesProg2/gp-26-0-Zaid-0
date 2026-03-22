@@ -11,10 +11,11 @@ Game::Game(AssetManager& t_assetManager)
 	m_assetManager(t_assetManager),
 	m_tank(t_assetManager, m_wallSprites),
 	m_aiTank(m_assetManager.getTexture("tankAtlas"), m_wallSprites),
-	m_bgSprite(m_tempTexture)
+	m_bgSprite(m_tempTexture),
+	m_hud(m_font)
 #ifdef TEST_FPS
-	, x_updateFPS(m_arialFont),
-	x_drawFPS(m_arialFont)
+	, x_updateFPS(m_font),
+	x_drawFPS(m_font)
 #endif
 {
 	init();
@@ -43,7 +44,7 @@ void Game::init()
 	m_tank.setPosition(m_level.m_tank.m_position);
 	m_tank.setScale(m_level.m_tank.m_scale);
 
-	if (!m_arialFont.openFromFile("BebasNeue.otf"))
+	if (!m_font.openFromFile("BebasNeue.otf"))
 	{
 		std::cerr << "Error loading font file";
 	}
@@ -97,11 +98,11 @@ void Game::init()
 	// Rotate turret to match tank rotation
 
 #ifdef TEST_FPS
-	x_updateFPS.setFont(m_arialFont);
+	x_updateFPS.setFont(m_font);
 	x_updateFPS.setPosition(sf::Vector2f{ 20.0f, 300.0f });
 	x_updateFPS.setCharacterSize(24);
 	x_updateFPS.setFillColor(sf::Color::White);
-	x_drawFPS.setFont(m_arialFont);
+	x_drawFPS.setFont(m_font);
 	x_drawFPS.setPosition(sf::Vector2f{ 20.0f, 350.0f });
 	x_drawFPS.setCharacterSize(24);
 	x_drawFPS.setFillColor(sf::Color::White);

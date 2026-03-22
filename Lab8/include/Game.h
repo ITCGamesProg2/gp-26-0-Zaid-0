@@ -18,6 +18,7 @@
 #include "Tank.h"
 #include "AITank.h"
 #include "GameState.h"
+#include "HUD.h"
 
 /// <summary>
 /// @author RP
@@ -94,8 +95,11 @@ protected:
 	/// </summary>
 	void generateWalls();
 
-	// Font used for all text
-	sf::Font m_arialFont;
+	//used for the HUD and debug FPS text when enabled
+	sf::Font m_font;
+
+	// game HUD instance
+	HUD m_hud;
 	// main window
 	sf::RenderWindow m_window;
 
