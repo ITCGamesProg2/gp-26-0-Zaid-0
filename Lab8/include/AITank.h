@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Tank.h"
+#include <functional>
 #include "MathUtility.h"
 
 
@@ -40,6 +41,15 @@ public:
 
 	bool collidesWithPlayer(Tank const& playerTank) const;
 
+	// applies damage to the AI tank, at 0 HP triggers optional elimination callback (set GAME_WIN)
+	void applyDamage(int t_damageAmount);
+
+	// AI tank base sprite (for projectile vs AI collision)
+	sf::Sprite getTankBase() const;
+
+	// called when health reaches 0 (bind to Game setting GAME_WIN)
+	void setOnEliminated(std::function<void()> t_callback);
+
 	/// <summary>
 	/// @brief Initialises the obstacle container and sets the tank base/turret sprites to the specified position and scale.
 	/// <param name="t_position">An x,y position</param>
@@ -76,6 +86,11 @@ private:
 
 	// A sprite for the turret
 	sf::Sprite m_turret{ m_texture };
+
+	int m_health{ 1 };
+	static int constexpr s_maxHealth{ 1 };
+
+	std::function<void()> m_onEliminated;
 
 	// A reference to the container of wall sprites.
 	std::vector<sf::Sprite> & m_wallSprites;

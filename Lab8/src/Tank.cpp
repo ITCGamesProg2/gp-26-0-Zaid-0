@@ -49,7 +49,7 @@ void Tank::deflect(double dt)
 	m_turret.move(sf::Vector2f(deflectVector.x, deflectVector.y));
 }
 
-void Tank::update(double dt)
+void Tank::update(double dt, std::function<void(int)>& t_funcApplyDamage, sf::Sprite t_aiTankBase)
 {
 	if (m_shootTimer > 0)
 	{
@@ -162,7 +162,7 @@ void Tank::update(double dt)
 	}
 	m_fireRequested = false;
 
-	m_pool.update(dt, m_wallSprites);
+	m_pool.update(dt, m_wallSprites, t_funcApplyDamage, t_aiTankBase);
 }
 
 void Tank::render(sf::RenderWindow & window) 

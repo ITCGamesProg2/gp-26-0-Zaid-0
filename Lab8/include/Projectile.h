@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <functional>
 #include "CollisionDetector.h"
 #include "ScreenSize.h"
 
@@ -42,8 +43,8 @@ public:
 	/// </summary>
 	/// <param name="dt">The delta time</param>
 	/// <param name="wallSprites">A reference to the container of wall sprites</param>
-	/// <returns>True if this projectile is currently not in use (i.e. speed is zero).</returns>
-	bool update(double t_dt, std::vector<sf::Sprite> & t_wallSprites);
+	bool update(double t_dt, std::vector<sf::Sprite>& t_wallSprites,
+		std::function<void(int)>& t_funcApplyDamage, sf::Sprite const& t_aiTankBase);
 	
 	/// <summary>
 	/// @brief Simpler helper function to determine if projectile is currently in use.

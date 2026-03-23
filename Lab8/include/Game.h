@@ -12,6 +12,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <vector>
+#include <functional>
 #include "ScreenSize.h"
 #include "AssetManager.h"
 #include "LevelLoader.h"
@@ -122,6 +123,10 @@ protected:
 	AITank m_aiTank;
 
 	GameState m_gameState{ GameState::GAME_RUNNING };
+
+	/// bound to AITank::applyDamage
+	// damage amount supplied when projectile hits AI base
+	std::function<void(int)> m_funcApplyDamage;
 
 	// Accumulates dt while in GAME_LOSE before auto-restart.
 	double m_loseRestartTimerMs{ 0.0 };

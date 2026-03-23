@@ -12,7 +12,8 @@ void Projectile::init(sf::Texture const & t_texture, double t_x, double t_y, sf:
 }
 
 ////////////////////////////////////////////////////////////
-bool Projectile::update(double t_dt, std::vector<sf::Sprite> & t_wallSprites)
+bool Projectile::update(double t_dt, std::vector<sf::Sprite>& t_wallSprites,
+	std::function<void(int)>& t_funcApplyDamage, sf::Sprite const& t_aiTankBase) 
 {
 	if (!inUse())
 	{
@@ -32,13 +33,21 @@ bool Projectile::update(double t_dt, std::vector<sf::Sprite> & t_wallSprites)
 	}
 	else 
 	{
-		// Still on-screen, have we collided with a wall?
-		for (sf::Sprite const & sprite : t_wallSprites)
+		if (CollisionDetector::collision(m_projectile, t_aiTankBase))
 		{
-			// Checks if the projectile has collided with the current wall sprite.
-			if (CollisionDetector::collision(m_projectile, sprite)) 
+			t_funcApplyDamage(1);
+			m_speed = 0;
+		}
+		else
+		{
+			// Still on-screen, have we collided with a wall?
+			for (sf::Sprite const& sprite : t_wallSprites)
 			{
-				m_speed = 0;
+				// Checks if the projectile has collided with the current wall sprite.
+				if (CollisionDetector::collision(m_projectile, sprite))
+				{
+					m_speed = 0;
+				}
 			}
 		}		
 	}

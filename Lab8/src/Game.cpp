@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <functional>
 #include <iostream>
 #include <stdexcept>
 
@@ -20,6 +21,9 @@ Game::Game(AssetManager& t_assetManager)
 #endif
 {
 	init();
+
+	using std::placeholders::_1;
+	m_funcApplyDamage = std::bind(&AITank::applyDamage, &m_aiTank, _1);
 }
 
 ////////////////////////////////////////////////////////////
@@ -129,6 +133,10 @@ void Game::init()
 	//m_assetManager.releaseTexture("tankAtlas");
 	generateWalls();
 	m_aiTank.init(m_level.m_aiTank.m_position, m_level.m_aiTank.m_scale);
+	m_aiTank.setOnEliminated([this]()
+		{
+			m_gameState = GameState::GAME_WIN;
+		});
 }
 
 void Game::restartRound()
@@ -254,7 +262,7 @@ void Game::update(double dt)
 	switch (m_gameState)
 	{
 	case GameState::GAME_RUNNING:
-		m_tank.update(dt);
+		m_tank.update(dt, m_funcApplyDamage, m_aiTank.getTankBase());
 		m_aiTank.update(m_tank, dt);
 		break;
 	case GameState::GAME_WIN:

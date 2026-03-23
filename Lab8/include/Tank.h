@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <functional>
 #include "AssetManager.h"
 #include "ProjectilePool.h"
 
@@ -20,9 +21,11 @@ public:
 	/// <summary>
 	/// @brief Handle all the movement and general update logic for the tank.
 	/// <param name="dt">The time between frames in milliseconds</param>
+	/// <param name="t_funcApplyDamage">Callback applied when a projectile hits the AI tank base.</param>
+	/// <param name="t_aiTankBase">AI tank base sprite for projectile collision.</param>
 	/// </summary>
-	void update(double dt);
-	
+	void update(double dt, std::function<void(int)>& t_funcApplyDamage, sf::Sprite t_aiTankBase);
+
 	/// <summary>
 	/// @brief To draw the turret and tank base.
 	/// <param name="window">The SFML render window</param>

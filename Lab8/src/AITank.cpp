@@ -112,8 +112,35 @@ bool AITank::collidesWithPlayer(Tank const& playerTank) const
 }
 
 ////////////////////////////////////////////////////////////
+void AITank::applyDamage(int t_damageAmount)
+{
+	if (m_health <= 0)
+	{
+		return;
+	}
+	m_health -= t_damageAmount;
+	if (m_health <= 0 && m_onEliminated)
+	{
+		m_onEliminated();
+	}
+}
+
+////////////////////////////////////////////////////////////
+sf::Sprite AITank::getTankBase() const
+{
+	return m_tankBase;
+}
+
+////////////////////////////////////////////////////////////
+void AITank::setOnEliminated(std::function<void()> t_callback)
+{
+	m_onEliminated = std::move(t_callback);
+}
+
+////////////////////////////////////////////////////////////
 void AITank::resetRound(sf::Vector2f t_position, sf::Vector2f t_scale)
 {
+	m_health = s_maxHealth;
 	m_velocity = sf::Vector2f{ 0.0f, 0.0f };
 	m_steering = sf::Vector2f{ 0.0f, 0.0f };
 	m_rotation = sf::degrees(0.0f);

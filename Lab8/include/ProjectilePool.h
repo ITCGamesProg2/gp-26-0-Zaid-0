@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <array>
+#include <functional>
 #include <vector>
 #include "Projectile.h"
 
@@ -31,8 +32,8 @@ public:
 	///  status flag to indicate pool full (all projectiles in use).
 	/// </summary>
 	/// <param name="dt">The delta time</param>	
-	/// <param name="rotation">A reference to the container of wall sprites</param>
-	void update(double t_dt, std::vector<sf::Sprite> & t_wallSprites);
+	void update(double t_dt, std::vector<sf::Sprite>& t_wallSprites,
+		std::function<void(int)>& t_funcApplyDamage, sf::Sprite const& t_aiTankBase);
 
 	/// <summary>
 	/// @brief Draws all active projectiles.

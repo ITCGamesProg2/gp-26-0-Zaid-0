@@ -24,14 +24,15 @@ void ProjectilePool::create(sf::Texture const& t_texture, double t_x, double t_y
 }
 
 ////////////////////////////////////////////////////////////
-void ProjectilePool::update(double t_dt, std::vector<sf::Sprite>& t_wallSprites)
+void ProjectilePool::update(double t_dt, std::vector<sf::Sprite>& t_wallSprites,
+	std::function<void(int)>& t_funcApplyDamage, sf::Sprite const& t_aiTankBase) 
 {
 	int activeCount = 0;
 	int firstAvailable = -1;
 
 	for (int i = 0; i < s_POOL_SIZE; ++i)
 	{
-		const bool stillActive = m_projectiles.at(i).update(t_dt, t_wallSprites);
+		const bool stillActive = m_projectiles.at(i).update(t_dt, t_wallSprites, t_funcApplyDamage, t_aiTankBase);
 		if (stillActive)
 		{
 			++activeCount;
