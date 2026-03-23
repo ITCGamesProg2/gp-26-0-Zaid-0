@@ -136,6 +136,7 @@ void Game::init()
 	m_aiTank.setOnEliminated([this]()
 		{
 			m_gameState = GameState::GAME_WIN;
+			m_restartTimerMs = 0.0;
 		});
 }
 
@@ -256,7 +257,7 @@ void Game::update(double dt)
 		&& m_aiTank.collidesWithPlayer(m_tank))
 	{
 		m_gameState = GameState::GAME_LOSE;
-		m_loseRestartTimerMs = 0.0;
+		m_restartTimerMs = 0.0;
 	}
 
 	switch (m_gameState)
@@ -266,12 +267,11 @@ void Game::update(double dt)
 		m_aiTank.update(m_tank, dt);
 		break;
 	case GameState::GAME_WIN:
-		break;
 	case GameState::GAME_LOSE:
-		m_loseRestartTimerMs += dt;
-		if (m_loseRestartTimerMs >= s_loseRestartDelayMs)
+		m_restartTimerMs += dt;
+		if (m_restartTimerMs >= s_restartDelayMs)
 		{
-			m_loseRestartTimerMs = 0.0;
+			m_restartTimerMs = 0.0;
 			restartRound();
 		}
 		break;

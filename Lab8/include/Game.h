@@ -128,9 +128,9 @@ protected:
 	// damage amount supplied when projectile hits AI base
 	std::function<void(int)> m_funcApplyDamage;
 
-	// Accumulates dt while in GAME_LOSE before auto-restart.
-	double m_loseRestartTimerMs{ 0.0 };
-	static double constexpr s_loseRestartDelayMs{ 3000.0 };
+	// Accumulates dt in GAME_WIN // GAME_LOSE before auto restart
+	double m_restartTimerMs{ 0.0 };
+	static double constexpr s_restartDelayMs{ 3000.0 };
 
 #ifdef TEST_FPS
 	sf::Text x_updateFPS;	// text used to display updates per second.
